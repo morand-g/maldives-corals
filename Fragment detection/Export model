@@ -1,0 +1,7 @@
+#!/bin/bash
+cd /home/mdc/Desktop/object_detection
+python3 export_inference_graph.py \
+    --input_type=image_tensor \
+    --pipeline_config_path='/media/mdc/Storage/models/fgvc101/pipeline.config' \
+    --trained_checkpoint_prefix='/media/mdc/Storage/models/fgvc101/model.ckpt-716521' \
+    --output_directory='/media/mdc/Storage/exported_model/fgvc101-716521'

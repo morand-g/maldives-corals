@@ -1,0 +1,7 @@
+#!/bin/bash
+cd /home/mdc/Desktop/object_detection
+gnome-terminal -e "python3 model_main.py --pipeline_config_path='/media/mdc/Storage/models/fgvc101/pipeline.config' --model_dir='/media/mdc/Storage/models/fgvc101/' --num_train_steps=1300000 --sample_1_of_n_ecal_examples=1 --alsologtostderr"
+gnome-terminal -e "tensorboard --logdir='/media/mdc/Storage/models/fgvc101/'"
+sleep 2
+firefox http://mdc:6006
+
