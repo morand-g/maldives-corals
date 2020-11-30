@@ -152,3 +152,25 @@ def get_growth_data():
     livedf.set_index('FragmentId', inplace = True)
 
     return(livedf)
+
+
+def get_bleached_data():
+
+    db = OpenMydb()
+    cur = db.cursor()
+
+    request = """SELECT Fragments.FragmentId, Fragments.Transplanted, Fragments.Type, MIN(Status.Date) AS Date, Status.Type AS Stat, Zone, Depth
+                FROM Fragments
+                INNER JOIN FSFrames ON Fragments.Tag = FSFrames.Tag
+                INNER JOIN Status ON Fragments.FragmentId = Status.FragmentId
+                WHERE Fragments.Type IN ('Pocillopora', 'Acropora')
+                AND Status.Type = 'Bleached Coral'
+                GROUP BY FragmentId"""
+    cur.execute(request)
+    data = pd.DataFrame(cur.fetchall())
+    desc = cur.description
+    data.columns = [col[0] for col in desc]
+    data['ObsDate'] = data['Date'].apply(lambda x:datetime.strptime('20' + str(x).zfill(6), '%Y%m%d')).dt.date
+    data['BleachDelay'] = (data['ObsDate'] - data['Transplanted']).dt.days
+
+    return(data)
