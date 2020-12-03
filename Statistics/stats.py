@@ -50,7 +50,7 @@ def split_data(fragdata):
 def get_volume_series():
 
     df, frags = get_volume_observations()
-    dates = list(pd.date_range(date(2016, 1, 1), date.today(), freq='d'))
+    dates = list(pd.date_range(date(2016, 1, 1), date(2020, 11, 25), freq='d'))
     fallen = pd.DataFrame(0, index=dates, columns=['Acropora', 'Pocillopora'])
     dead = pd.DataFrame(0, index=dates, columns=['Acropora', 'Pocillopora'])
     live = pd.DataFrame(0, index=dates, columns=['Acropora', 'Pocillopora'])
