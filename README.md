@@ -1,14 +1,14 @@
-# <span id="anchor"></span>Analyzing coral restoration with machine learning
+# Analyzing coral restoration with machine learning
 
 # Table of Contents
-* [<span id="anchor-1"></span>Introduction](#<span-id="anchor-1"></span>Introduction)
+* [Introduction](#introduction)
 * [<span id="anchor-7"></span>Training the fragment detection model](#<span-id="anchor-7"></span>Training-the-fragment-detection-model)
 * [<span id="anchor-6"></span>Training the frame structure model](#<span-id="anchor-6"></span>Training-the-frame-structure-model)
 * [<span id="anchor-2"></span>Frame analysis](#<span-id="anchor-2"></span>Frame-analysis)
 	* [<span id="anchor-3"></span>Data storage](#<span-id="anchor-3"></span>Data-storage)
 	* [<span id="anchor-4"></span>Working principle](#<span-id="anchor-4"></span>Working-principle)
 	* [<span id="anchor-5"></span>Running the algorithms on new frames](#<span-id="anchor-5"></span>Running-the-algorithms-on-new-frames)
-* [<span id="anchor-8"></span>Notes](#<span-id="anchor-8"></span>Notes)
+* [Notes](#notes)
 	* [<span id="anchor-9"></span>Image editing](#<span-id="anchor-9"></span>Image-editing)
 	* [<span id="anchor-10"></span>Frame encoding](#<span-id="anchor-10"></span>Frame-encoding)
 	* [<span id="anchor-11"></span>Python requirements](#<span-id="anchor-11"></span>Python-requirements)
@@ -16,7 +16,7 @@
 
 
 
-## <span id="anchor-1"></span>Introduction
+## Introduction
 
 With hundreds of thousands of monitoring pictures, we have one of the most extensive database on coral restoration in the world. This project’s goal is to extract the information contained within these pictures. We can then analyze this data to understand coral growth and resilience better.
 
@@ -128,7 +128,7 @@ Python functions are divided into 8 files :
   - **analyze1by1.py** : file that should be called from command
     line to automatically run the algorithm on a large number of frames.
 
-## <span id="anchor-8"></span>Notes
+##Notes
 
 In order to run everything except the *Results* notebook for statistics, there is significant adaptation work to be done, mostly to match the folder paths to your folder structure.
 
