@@ -68,7 +68,7 @@ All necessary files are in the *Frame segmentation* folder.
 
 ### <span id="anchor-3"></span>Data storage
 
-All the data is stored in the database, accessible on SEANOE. Seven
+All the data is stored in the database, accessible on [SEANOE](https://doi.org/10.17882/77361). Seven
 different tables contain respectively:
 
   - **FrameParams**: Camera parameters which define the position of the
@@ -176,4 +176,4 @@ exceptions.
 ## <span id="anchor-12"></span>Statistics and Results
 
 All the results mentioned in the paper can be calculated from the database using the *Results* jupyter notebook.
-To reproduce our results, we recommend using the database we published on SEANOE rather than generating it again, as it takes several weeks. To do this, you will need to setup a SQL server and import our database, and update the credentials in the *Statistics/sql.py* file.
+To reproduce our results, we recommend using the database we published on [SEANOE](https://doi.org/10.17882/77361) rather than generating it again, as it takes several weeks. To do this, you will need to setup a MySQL server and import our database, and update the credentials in the *Statistics/sql.py* file.
