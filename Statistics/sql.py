@@ -159,13 +159,19 @@ def get_bleached_data():
     db = OpenMydb()
     cur = db.cursor()
 
-    request = """SELECT Fragments.FragmentId, Fragments.Transplanted, Fragments.Type, MIN(Status.Date) AS Date, Status.Type AS Stat, Zone, Depth
+    request = """SELECT Fragments.FragmentId, Fragments.Transplanted, Fragments.Type, bleached_date1 AS Date, Zone, Depth, Outcome
                 FROM Fragments
                 INNER JOIN FSFrames ON Fragments.Tag = FSFrames.Tag
-                INNER JOIN Status ON Fragments.FragmentId = Status.FragmentId
-                WHERE Fragments.Type IN ('Pocillopora', 'Acropora')
-                AND Status.Type = 'Bleached Coral'
-                GROUP BY FragmentId"""
+                INNER JOIN (SELECT Status.FragmentId, bleached_date1, Status.Type AS Outcome FROM Status INNER JOIN
+                                (SELECT Status.FragmentId, bleached_date1, MIN(Date) AS outcome_date FROM Status INNER JOIN
+                                    (SELECT Status.FragmentId, MIN(Date) AS bleached_date1, MAX(Date) AS bleached_date2 FROM Status WHERE Type = 'Bleached Coral' GROUP BY FragmentId) A
+                                ON Status.FragmentId = A.FragmentId
+                                WHERE Date > bleached_date2
+                                GROUP BY FragmentId
+                                ) B ON Status.FragmentId = B.FragmentId AND Status.Date = B.outcome_date
+                            ) C ON Fragments.FragmentId = C.FragmentId 
+                WHERE Fragments.Type IN ('Pocillopora', 'Acropora')"""
+
     cur.execute(request)
     data = pd.DataFrame(cur.fetchall())
     desc = cur.description
