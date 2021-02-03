@@ -884,10 +884,12 @@ def make_statuses(tag, frag_ids, frags):
 
         for i in range(1, len(status)):
             if status[i - 1] == 'Dead Coral':
-                if status[i] in ['Dead Coral', 'Fallen', 'Undetected']:
-                    status = status[:i] + ['Dead Coral'] * (len(dates) - i)
+                if status[i] == 'Dead Coral':
+                    for j in range(i+1, len(dates)):
+                        if status[j] in ['Live Coral', 'Bleached Coral']:
+                            status[j] = 'Dead Coral'
                     break
-                else:
+                elif status[i] in ['Live Coral', 'Bleached Coral']:
                     status[i - 1] = status[i]
 
         # Get Falling/Dying date
