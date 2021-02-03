@@ -95,13 +95,13 @@ def get_volume_series():
                 added = pd.Series(obs[i - 1]['vol'], index=list(pd.date_range(frags[frag_id]['Dead'], obs[i]['Date'], freq='d', closed='left')))
                 dead[t] = dead[t].add(added, fill_value = 0)
                 date0 = obs[i]['Date']
-                for j in range(i, obs_count - 2):
+                for j in range(i, obs_count - 1):
                     date1 = obs[j + 1]['Date']
                     added = pd.Series(obs[j]['vol'], index=list(pd.date_range(date0, date1, freq='d', closed='left')))
                     dead[t] = dead[t].add(added, fill_value = 0)
                     date0 = date1
 
-            added = pd.Series(obs[obs_count - 1]['vol'], index=list(pd.date_range(obs[obs_count - 1]['Date'], date.today(), freq='d')))
+            added = pd.Series(obs[obs_count - 1]['vol'], index=list(pd.date_range(max(date0, frags[frag_id]['Dead']), date.today(), freq='d')))
             dead[t] = dead[t].add(added, fill_value = 0)
 
             if frags[frag_id]['FallDate'] is not None:
