@@ -1,5 +1,11 @@
 # Analyzing coral restoration with machine learning
 
+This work was published in *Aquatic Conservation: Marine and Freshwater Ecosystems* ([link](https://doi.org/10.1002/aqc.3878)) and can be cited the following way:
+
+> Morand, G., Dixon, S. & Le Berre, T. (2022). Identifying key factors for coral survival in reef restoration projects using deep learning. *Aquatic Conservation: Marine and Freshwater Ecosystems*, 32( 11), 1758– 1773. https://doi.org/10.1002/aqc.3878 
+
+![A typical coral frame, Photo credit: Simon Dixon](Images/fig1.jpg)
+
 # Table of Contents
 * [Introduction](#introduction)
 * [Training the fragment detection model](#training-the-fragment-detection-model)
@@ -14,7 +20,7 @@
 	* [Python requirements](#python-requirements)
 * [Statistics and Results](#statistics-and-results)
 
-
+![Illustration of the analysis process](Images/fig2.jpg)
 
 ## Introduction
 
