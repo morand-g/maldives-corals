@@ -4,6 +4,8 @@ This work was published in *Aquatic Conservation: Marine and Freshwater Ecosyste
 
 > Morand, G., Dixon, S. & Le Berre, T. (2022). Identifying key factors for coral survival in reef restoration projects using deep learning. *Aquatic Conservation: Marine and Freshwater Ecosystems*, 32( 11), 1758– 1773. https://doi.org/10.1002/aqc.3878 
 
+
+
 | ![fig1.jpg](Images/fig1.jpg) | 
 |:--:| 
 | *A typical coral frame, Photo credit: Simon Dixon* |
