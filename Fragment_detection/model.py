@@ -12,8 +12,7 @@ from imageai.Detection.Custom import DetectionModelTrainer
 from imageai.Detection.Custom import CustomObjectDetection
 from pylabel import importer
 import cv2
-import torch
-print(torch.cuda.is_available())
+
 
 
 
@@ -61,7 +60,7 @@ def detect_objects_untrained(input_image, output_image):
     for detection in detections:
         print(detection["name"], " : ", detection["percentage_probability"], " : ", detection["box_points"])
 
-def detect_objects(input_image):
+def detect_objects(input_image, model):
     """Run the object-detection model YOLO V3 after retraining
     it with the coral images"""
 
@@ -74,7 +73,7 @@ def detect_objects(input_image):
     for detection in detections:
         print(detection["name"], " : ", detection["percentage_probability"], " : ", detection["box_points"])
 
-def train_model():
+def train_model(model_path):
     """Retrain the YOLO model with with the coral images. In order to train the model you need
     training data formatted in YOLO format. These files must be included in a data subfolder.
     The trained model will be exported to data/models.
@@ -85,16 +84,16 @@ def train_model():
     trainer.setDataDirectory(data_directory="data")
     trainer.setTrainConfig(object_names_array=["acropora", "tag", "pocillopora", "dead", "bleached"], 
                            batch_size=10, 
-                           num_experiments=5, 
-                           train_from_pretrained_model="yolov3.pt")
+                           num_experiments=50, 
+                           train_from_pretrained_model=model_path)
     trainer.trainModel()
 
 
 # coco_to_yolo("output/COCO_train.json", "output/train_pictures")
 # coco_to_yolo("output/COCO_val.json", "output/val_pictures")
 # equalize_img("output/all_pictures", "eq_pictures")
-
-train_model()
+# detect_objects("image_test.py", "data/json/data_yolov3_detection_config.json")
+train_model("data/models/yolov3_data_last.pt")
 
 ###########################################################
 # TRYING STUFF BELOW
