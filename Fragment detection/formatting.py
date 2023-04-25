@@ -95,11 +95,11 @@ def create_coco(pictures_path, annotations_path, outputDir, picture_subs):
     # Applies autocontrast & CLAHE to pictures and puts them into two subfolders (train and val).
 
     trainDict = dict()
-    trainDict["categories"] = [{"supercategory": "live_coral", "id": 1, "name": "acro"},
-                              {"supercategory": "live_coral", "id": 2, "name": "poc"},
-                              {"supercategory": "dead_coral", "id": 3, "name": "dead"},
-                              {"supercategory": "live_coral", "id": 4, "name": "bleached"},
-                              {"supercategory": "other", "id": 5, "name": "tag"}
+    trainDict["categories"] = [{"supercategory": "live_coral", "id": 0, "name": "acropora"},
+                              {"supercategory": "live_coral", "id": 1, "name": "pocillopora"},
+                              {"supercategory": "dead_coral", "id": 2, "name": "dead"},
+                              {"supercategory": "live_coral", "id": 3, "name": "bleached"},
+                              {"supercategory": "other", "id": 4, "name": "tag"}
                               ]
     valDict = copy.deepcopy(trainDict)
     
@@ -143,7 +143,8 @@ def create_coco(pictures_path, annotations_path, outputDir, picture_subs):
         imgs[i_count in train].append(image)
 
         r, g, b = im.split()
-        r, g, b = ImageOps.autocontrast(r, cutoff = 1), ImageOps.autocontrast(g, cutoff = 1), ImageOps.autocontrast(b, cutoff = 1)
+        # TURNING OFF AUTOCONTRAST !
+        # r, g, b = ImageOps.autocontrast(r, cutoff = 1), ImageOps.autocontrast(g, cutoff = 1), ImageOps.autocontrast(b, cutoff = 1)
         im = Image.merge("RGB",[r, g, b])
 
         img_file = np.uint8(im)

@@ -6,9 +6,47 @@ being worked on.
 
 Note that the trained model is not provided on the repository."""
 
+import os
 from imageai.Detection import ObjectDetection
 from imageai.Detection.Custom import DetectionModelTrainer
 from imageai.Detection.Custom import CustomObjectDetection
+from pylabel import importer
+import cv2
+import torch
+print(torch.cuda.is_available())
+
+
+
+def coco_to_yolo(annotations_path, img_path):
+    """Helper function to convert COCO annotations to YOLO format"""
+    
+    #Specify path to the coco.json file
+    path_to_annotations = annotations_path
+    #Specify the path to the images (if they are in a different folder than the annotations)
+    path_to_images = img_path
+    dataset = importer.ImportCoco(path_to_annotations, path_to_images=path_to_images, name="COCO_annot")
+    dataset.path_to_annotations = path_to_annotations + "/yolo"
+    dataset.export.ExportToYoloV5()
+
+def equalize_img(img_folder, output_folder):
+    """Equalizes images histograms"""
+
+    processed_img = 0
+    os.makedirs(output_folder)
+    files = os.listdir(img_folder)
+    for img in files:
+        rgb_img = cv2.imread(img_folder + '/' + img)
+        # convert from RGB color-space to YCrCb
+        ycrcb_img = cv2.cvtColor(rgb_img, cv2.COLOR_BGR2YCrCb)
+        # equalize the histogram of the Y channel
+        ycrcb_img[:, :, 0] = cv2.equalizeHist(ycrcb_img[:, :, 0])
+        # convert back to RGB color-space from YCrCb
+        equalized_img = cv2.cvtColor(ycrcb_img, cv2.COLOR_YCrCb2BGR)
+        cv2.imwrite(output_folder + '/' + img, equalized_img)
+        processed_img += 1
+        if processed_img % 10 == 0: 
+            print(f"{processed_img} images processed")
+    
 
 
 def detect_objects_untrained(input_image, output_image):
@@ -46,10 +84,21 @@ def train_model():
     trainer.setModelTypeAsYOLOv3()
     trainer.setDataDirectory(data_directory="data")
     trainer.setTrainConfig(object_names_array=["acropora", "tag", "pocillopora", "dead", "bleached"], 
-                           batch_size=5, 
-                           num_experiments=200, 
+                           batch_size=10, 
+                           num_experiments=5, 
                            train_from_pretrained_model="yolov3.pt")
     trainer.trainModel()
+
+
+# coco_to_yolo("output/COCO_train.json", "output/train_pictures")
+# coco_to_yolo("output/COCO_val.json", "output/val_pictures")
+# equalize_img("output/all_pictures", "eq_pictures")
+
+train_model()
+
+###########################################################
+# TRYING STUFF BELOW
+
 
 from segment_anything import SamPredictor, sam_model_registry, SamAutomaticMaskGenerator
 from matplotlib.image import imread
@@ -66,7 +115,7 @@ def predict_with_sam(image):
     image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
     result = mask_generator.generate(image_rgb)
 
-predict_with_sam("image_test.jpg")
+
 
 
 
