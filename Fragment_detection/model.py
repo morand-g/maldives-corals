@@ -60,7 +60,7 @@ def detect_objects_untrained(input_image, output_image):
     for detection in detections:
         print(detection["name"], " : ", detection["percentage_probability"], " : ", detection["box_points"])
 
-def detect_objects(input_image, model):
+def detect_objects(input_image):
     """Run the object-detection model YOLO V3 after retraining
     it with the coral images"""
 
@@ -69,7 +69,7 @@ def detect_objects(input_image, model):
     detector.setModelPath("data/models/yolov3_data_last.pt")
     detector.setJsonPath("data/json/data_yolov3_detection_config.json")
     detector.loadModel()
-    detections = detector.detectObjectsFromImage(input_image=input_image, minimum_percentage_probability=0.1)
+    detections = detector.detectObjectsFromImage(input_image=input_image, output_image_path="prediction.jpg", minimum_percentage_probability=50)
     for detection in detections:
         print(detection["name"], " : ", detection["percentage_probability"], " : ", detection["box_points"])
 
@@ -92,8 +92,8 @@ def train_model(model_path):
 # coco_to_yolo("output/COCO_train.json", "output/train_pictures")
 # coco_to_yolo("output/COCO_val.json", "output/val_pictures")
 # equalize_img("output/all_pictures", "eq_pictures")
-# detect_objects("image_test.py", "data/json/data_yolov3_detection_config.json")
-train_model("data/models/yolov3_data_last.pt")
+detect_objects("image_test.jpg")
+# train_model("data/models/yolov3_data_last.pt")
 
 ###########################################################
 # TRYING STUFF BELOW

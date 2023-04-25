@@ -38,7 +38,8 @@ class Model(ABC):
         Args:
             img: iterable where each element contains the images for one structure
             from different angles
-            fragments_location: iterable
+            fragments_location: iterable containing the location of each fragment
+            on the structure's bars. 
 
         """
         pass
