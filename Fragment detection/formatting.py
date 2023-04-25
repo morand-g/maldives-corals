@@ -4,16 +4,26 @@ import glob
 import shutil
 import cv2
 import numpy as np
+import pandas as pd
+import copy
 
 from PIL import Image, ImageOps
 from random import sample
-import copy
+
+def extract_filename(img):
+    
+    var1 = img.split("?", 1)[0]
+    
+    var1 = var1.split("-")[-1]
+    
+    print(var1)
+    return var1  
+
 
 def add_new_annots(pictures_path, annotation_path, sloth_json_path, new_pictures_path):
     # Splits annotations into one file per picture.
     # Removes mentions to images that don't have any annotation.
     # Crops bounding boxes bigger than pictures.
-
 
     data = json.load(open(sloth_json_path))
 
@@ -23,26 +33,39 @@ def add_new_annots(pictures_path, annotation_path, sloth_json_path, new_pictures
     i_count = 0
 
     for i_it in range(len(data)):
+        
+        keys = data[i_it].keys()
+        
+        for key in keys:
+            print(key)
 
         pic = data[i_it]
 
-        filename = pic["filename"]
-        head, tail = os.path.split(filename)
+
+        filename = pic["Labeled Data"]
+
+        tail = extract_filename(filename)
+        
         basename, extension = os.path.splitext(tail)
 
+        
         im = cv2.imread(pictures_path + tail)
+        print(pictures_path + tail)
+        
         height, width = im.shape[:2]
 
-        if(len(pic["annotations"])):
+        if(len(pic["Label"]["objects"])):
             i_count = i_count + 1
             
             new_dict = {"filename": tail, "width": width, "height": height, "annotations": []}
 
-            for a_it in range(len(pic["annotations"])):
+            for a_it in range(len(pic["Label"]["objects"])):
                 a_count = a_count + 1
-
-                old_annot = pic["annotations"][a_it]
-                x, y, w, h = float(old_annot['x']), float(old_annot['y']), float(old_annot['width']), float(old_annot['height'])
+                try:
+                    old_annot = pic["Label"]["objects"][a_it]["bbox"]
+                except KeyError:
+                    continue
+                x, y, w, h = float(old_annot['left']), float(old_annot['top']), float(old_annot['width']), float(old_annot['height'])
 
                 if(x < 0):
                     x = 0
@@ -53,7 +76,7 @@ def add_new_annots(pictures_path, annotation_path, sloth_json_path, new_pictures
                 if(y + h > height):
                     h = height - y
 
-                new_annot = {"class": old_annot['class'], 'x': x, 'y': y, 'height': h, 'width': w}
+                new_annot = {"class": pic["Label"]["objects"][a_it]["value"], 'x': x, 'y': y, 'height': h, 'width': w}
                 new_dict['annotations'].append(new_annot)
 
             jsonString = json.dumps(new_dict, indent = 4)
