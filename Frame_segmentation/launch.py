@@ -1,29 +1,15 @@
-"""
-from nbconvert import execute_notebook
-
-Fonction de test pour lire un notebook
-def run_notebook(notebook_path):
-    execute_notebook(
-        notebook_path,
-        output_path=None,
-        log_output=True,
-        kernel_name='python3'
-    )
-    
-notebook_path = 'Frame_segmentation/frame_segmentation_mask.ipynb'
-run_notebook(notebook_path)
-"""
-
 from functions import *
 import os
 import requests
 import json
 
 def define_paths():
-    """_summary_
-    Cette fonction définit les chemins pour le dossier Frame_segmentation, le dossier contenant les images, 
-    le dossier où les masques seront enregistrés et le fichier JSON contenant les annotations.
-    
+    """define_paths
+    This function defines the paths for the Frame_segmentation folder, the folder containing the images, 
+    the folder where the masks will be saved and the JSON file containing the annotations.
+
+    Returns:
+        str: returns the paths of the folders
     """
     # Chemin du dossier Frame_segmentation
     data_dir = os.getcwd() + "/data/Frame_segmentation"
@@ -42,10 +28,15 @@ def define_paths():
     return data_dir, pictures_path, masks_path, json_path
 
 def load_json(json_path):
-    """
-    Charge les données d'un fichier JSON.
-    :param json_path: le chemin vers le fichier JSON
-    :return: une liste des items contenus dans le fichier JSON
+    """load_json
+    
+    Loads data from a JSON file.
+    
+    Args:
+        json_path (str): the path to the JSON file
+
+    Returns:
+        array :  a list of items contained in the JSON file
     """
     with open(json_path, "r") as f:
         data = json.load(f)
@@ -63,8 +54,8 @@ def load_json(json_path):
 def create_folder(path):
     """create folder
     
-    Cette fonction vérifie si un dossier existe déjà à un chemin donné,
-    et si ce n'est pas le cas, elle le crée.
+    This function checks if a folder already exists at a given path,
+    and if it doesn't, it creates it.
 
     Args:
         path (str): path to the folder where the images are saved
@@ -78,9 +69,13 @@ def create_folder(path):
 
 
 def download_masks(items):
-    """_summary_
-    Cette fonction télécharge des images de masques, Seuls les masques associés à des "frame_bar" sont téléchargés, 
-    et ils sont enregistrés dans des dossiers portant le nom de l'objet associé.
+    """download_masks
+    
+    This function downloads mask images, only masks associated with frame_bar are downloaded, 
+    and they are saved in folders with the name of the associated object.
+
+    Args:
+        items (array): a list of items contained in the JSON file
     """
     for item in items:  
         image_id = item['External ID']
@@ -110,10 +105,15 @@ def download_masks(items):
 #pour l'utilisé : download_masks(items)
 
 def superpose_masks(pictures_path, masks_path):
-    """_summary_
-    la fonction  combine plusieurs images de masques en une seule image superposée,
-    qui représente l'intersection des masques.
-    Cette image est ensuite enregistrée dans un dossier spécifié.
+    """superpose_masks
+    
+    the function combines several mask images into one superimposed image,
+    which represents the intersection of the masks.
+    This image is then saved in a specified folder.
+
+    Args:
+        pictures_path (str): path for the pictures
+        masks_path (str): path for the masks
     """
     # Définir les noms des dossiers contenant les images à superposer
     image_folders = os.listdir(pictures_path)
@@ -144,9 +144,13 @@ def superpose_masks(pictures_path, masks_path):
             image_superposee.save(os.path.join(mask_dir, f"{image_folder}_mask.png"))
 
 def rename_files(masks_path):
-    """_summary_
-    la fonction renomme tous les fichiers d'images 
-    dans un dossier pour leur donner un nom sans extension.
+    """rename_files
+    
+    the function renames all image files 
+    in a folder to give them a name without extension.
+    
+    Args:
+        masks_path (str): path for the masks
     """
     masks_path = "./structure/masks/"
     print(masks_path)
@@ -162,9 +166,11 @@ def rename_files(masks_path):
                 os.rename(os.path.join(masks_path, file), os.path.join(masks_path, new_name))
 
 def delete_unmatched_images():
-    """_summary_
-    la fonction supprime les images qui n'ont pas de masque correspondant dans un ensemble de données, 
-    en comparant les noms de fichiers entre les images et les masques.
+    """delete_unmatched_images
+    
+    the function deletes the images that do not have a corresponding mask in a dataset, 
+    by comparing the file names between the images and the masks.
+    
     """
     # Chemin des dossiers contenant les images et les annotations
     images_dir = os.path.join(os.getcwd(), "CORAL_FRAMES")
@@ -191,15 +197,7 @@ def delete_unmatched_images():
                         # supprimer l'image
                         os.remove(os.path.join(subdir_path, image_file))
 
-def resize_and_pad_images(masks_path, pictures_path, out_path, target_width = 200):
-    """_summary_
-    la fontion redimensionne et ajoute des marges à des images pour les adapter à un format cible,
-    puis les enregistre dans un dossier de sortie.
-    Elle utilise la fonction "prepare_pictures()" pour effectuer cette opération.
-    """
-    prepare_pictures(masks_path, pictures_path, out_path, target_width)
-    
-    return None
+
 
 
 
