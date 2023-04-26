@@ -1,6 +1,3 @@
-from typing import Iterable
-from maldives_corals.interface import CoralModelsInterface
-
 """
 This is the class that trains and uses the models needed to detect
 individual coral fragments' positions on a structure.
@@ -11,9 +8,18 @@ coral fragments on an image
 More models will be added later.
 """
 
+from imageai.Detection.Custom import DetectionModelTrainer
+from imageai.Detection.Custom import CustomObjectDetection
+from typing import Iterable
+
+
+from maldives_corals import utils
+from maldives_corals.interface import CoralModelsInterface
+
+
 class CoralsModels(CoralModelsInterface):
 
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def fit_corals_detection(img: Iterable, annot: Iterable):
