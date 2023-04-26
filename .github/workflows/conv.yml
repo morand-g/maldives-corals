@@ -1,15 +1,16 @@
-name: Conv test
+name: conv test
 
 on:
   push:
     branches:
-      - Feat/pipeline_conv 
+      - Feat/pipeline_conv
   pull_request:
     branches:
       - Team-BDD
       - Team-DW
-      - Team-IA
       - Team-Ref
+      - Team-IA
+      - Team-CI
 
 jobs:
   test:
@@ -32,11 +33,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Start MySQL service
-        run: sudo service mysql start
-
-      - name: Wait for MySQL service to start
-        run: sudo systemctl is-active mysql.service
-
-      - name: Run database tests
+      - name: Run conv tests
         run: pytest test_conv.py 
