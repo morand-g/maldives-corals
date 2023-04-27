@@ -1,0 +1,37 @@
+AFTER 5 EPOCHS ON RAW IMAGES (BATCH-SIZE = 10)
+Train: 
+29it [00:42,  1.48s/it]
+    box loss-> 0.10660, object loss-> 0.22277, class loss-> 0.04819
+Validation:
+15it [03:23, 13.55s/it]
+    recall: 0.015012 precision: 0.010474 mAP@0.5: 0.003118, mAP@0.5-0.95: 0.000560
+
+AFTER 50 EPOCHS ON RAW IMAGES (BATCH-SIZE = 10)
+
+Train: 
+29it [00:39,  1.35s/it]
+    box loss-> 0.07122, object loss-> 0.19027, class loss-> 0.01156
+Validation:
+15it [01:17,  5.19s/it]
+    recall: 0.082082 precision: 0.062810 mAP@0.5: 0.053022, mAP@0.5-0.95: 0.013985
+
+
+AFTER 100 EPOCHS ON RAW IMAGES (BATCH-SIZE = 10)
+
+Train: 
+29it [00:39,  1.35s/it]
+    box loss-> 0.05388, object loss-> 0.17079, class loss-> 0.00696
+Validation:
+15it [00:32,  2.19s/it]
+    recall: 0.074334 precision: 0.072621 mAP@0.5: 0.053318, mAP@0.5-0.95: 0.014528
+
+AFTER 200 EPOCHS ON RAW IMAGES (BATCH-SIZE = 10)
+
+
+AFTER 5 EPOCHS ON EQUALIZED IMAGES (BATCH-SIZE = 10)
+
+AFTER 50 EPOCHS ON EQUALIZED IMAGES (BATCH-SIZE = 10)
+
+AFTER 100 EPOCHS ON EQUALIZED IMAGES (BATCH-SIZE = 10)
+
+AFTER 200 EPOCHS ON EQUALIZED IMAGES (BATCH-SIZE = 10)
