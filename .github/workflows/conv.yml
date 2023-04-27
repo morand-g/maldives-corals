@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - Feat/pipeline_conv
+      - Team-BDD
+      - Team-DW
+      - Team-Ref
+      - Team-IA
+      - Team-CI
+      - main
   pull_request:
     branches:
       - Team-BDD
